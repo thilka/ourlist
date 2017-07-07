@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 
 import ProjectList from './components/ProjectList';
+import Details from './components/Details';
 
 export default class App extends Component {
   render() {
@@ -15,10 +16,9 @@ export default class App extends Component {
         <Text style={styles.welcome}>
           OurList: Because lists are ours!
         </Text>
+        <Details/>
         <ProjectList/>
       </View>
-        
-
     );
   }
 }
