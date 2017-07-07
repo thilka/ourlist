@@ -4,11 +4,15 @@ import {
   FlatList,
   StyleSheet,
   TouchableHighlight,
-  Text
+  Text,
+  Alert
 } from 'react-native';
 
 
-
+const projects = [
+  {name: 'Project 1'},
+  {name: 'Project 2'},
+];
 
 export default class ProjectList extends Component {
 
@@ -16,13 +20,11 @@ export default class ProjectList extends Component {
 
   renderItem = ({item, index}) => {
     return (
-      <TouchableHighlight style={[ styles.item, { borderTopWidth: index === 0 ? 1 : null} ]} onPress={this.onPress}>
+      <TouchableHighlight underlayColor='grey' style={[ styles.item, { borderTopWidth: index === 0 ? 4 : null} ]} onPress={this.onPress}>
         <Text style={styles.text}>{item.name}</Text>
       </TouchableHighlight>
     )
   }
-
-  
 
   render() {
     return (
@@ -34,19 +36,18 @@ export default class ProjectList extends Component {
   }
 }
 
-const projects = [
-  {name: 'FirstItem'},
-  {name: 'SecondItem'},
-];
+
 
 const styles = StyleSheet.create({
   item: {
+    flex:1,
     padding: 20,
     justifyContent: 'center',
     borderColor: 'black',
     borderBottomWidth: 1
   },
   text: {
-    fontSize: 18
+    fontSize: 18,
+    alignSelf: 'center'
   }
 });
