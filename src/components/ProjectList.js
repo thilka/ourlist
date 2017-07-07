@@ -16,14 +16,14 @@ const projects = [
 
 export default class ProjectList extends Component {
 
-  onPress = () => {
+  onPress = (item) => {
     const { navigate } = this.props.navigation
-    navigate("Details")
+    navigate("Details", {item: item})
   }
 
   renderItem = ({item, index}) => {
     return (
-      <TouchableHighlight underlayColor='grey' style={[ styles.item, { borderTopWidth: index === 0 ? 1 : null} ]} onPress={this.onPress}>
+      <TouchableHighlight underlayColor='lightgrey' style={[ styles.item, { borderTopWidth: index === 0 ? 1 : null} ]} onPress={() => this.onPress(item)}>
         <Text style={styles.text}>{item.name}</Text>
       </TouchableHighlight>
     )

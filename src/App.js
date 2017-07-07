@@ -15,7 +15,6 @@ export default class App extends Component {
 
   static navigationOptions = {
     headerTitle: "OurList",
-    headerStyle: { backgroundColor: 'white'},
     headerAlignment: 'center'
   }
 
