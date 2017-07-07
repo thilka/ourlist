@@ -6,18 +6,23 @@ import {
   View
 } from 'react-native';
 
+import {StackNavigator} from 'react-navigation'
+
 import ProjectList from './components/ProjectList';
 import Details from './components/Details';
 
 export default class App extends Component {
+
+  static navigationOptions = {
+    headerTitle: "OurList",
+    headerStyle: { backgroundColor: 'white'},
+    headerAlignment: 'center'
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          OurList: Because lists are ours!
-        </Text>
-        <Details/>
-        <ProjectList/>
+        <ProjectList navigation={this.props.navigation}/>
       </View>
     );
   }
@@ -29,7 +34,6 @@ const styles = StyleSheet.create({
     padding: 10,
     justifyContent: 'center',
     alignItems: 'stretch',
-    backgroundColor: '#F5FCFF',
   },
   welcome: {
     fontSize: 20,
@@ -38,4 +42,13 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('ourlist', () => App);
+
+/////////////////////////////////////////////////////////
+// Navigation
+
+const Navigation = StackNavigator({
+  Home: { screen: App, },
+  Details: { screen: Details, },
+})
+
+AppRegistry.registerComponent('ourlist', () => Navigation);

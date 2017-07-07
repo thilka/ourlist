@@ -16,11 +16,14 @@ const projects = [
 
 export default class ProjectList extends Component {
 
-  onPress = () => {}
+  onPress = () => {
+    const { navigate } = this.props.navigation
+    navigate("Details")
+  }
 
   renderItem = ({item, index}) => {
     return (
-      <TouchableHighlight underlayColor='grey' style={[ styles.item, { borderTopWidth: index === 0 ? 4 : null} ]} onPress={this.onPress}>
+      <TouchableHighlight underlayColor='grey' style={[ styles.item, { borderTopWidth: index === 0 ? 1 : null} ]} onPress={this.onPress}>
         <Text style={styles.text}>{item.name}</Text>
       </TouchableHighlight>
     )
@@ -35,8 +38,6 @@ export default class ProjectList extends Component {
     )
   }
 }
-
-
 
 const styles = StyleSheet.create({
   item: {
