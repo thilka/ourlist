@@ -8,13 +8,58 @@ import {
   Alert
 } from 'react-native';
 
+import firebase from '../firebase/FirebaseConfig'
 
-const projects = [
+const initialProjects = [
   {name: 'Project 1'},
   {name: 'Project 2'},
 ];
 
 export default class ProjectList extends Component {
+
+  constructor() {
+    super();
+    this.ref = null;
+    this.state = {
+      projects: initialProjects
+    }
+  }
+
+  // On mount, subscribe to ref updates
+  componentDidMount() {
+    firebase.auth().signInAnonymously()
+      .then((user) => {
+       console.log('Anonymous user logged in'); 
+      })
+      .catch((err) => {
+        console.error('Anonymous user signin error', err);
+      });
+
+
+      this.ref = firebase.database().ref('projects');
+      this.ref.on('value', (snapshot) => {
+        const updatedProjects = []
+        const remoteProjects = snapshot.val();
+
+        for (project in remoteProjects) {
+          const name = remoteProjects[project].name
+          updatedProjects.push({name: name })
+        }
+        this.setState({projects: updatedProjects})
+      });
+  }
+
+  // On unmount, ensure we no longer listen for updates
+  componentWillUnmount() {
+    if (this.ref) {
+      this.ref.off('value', this.handlePostUpdate);
+    }
+  }
+
+  // Bind the method only once to keep the same reference
+  handlePostUpdate = (snapshot) => {
+    console.log('Post Content', snapshot.val());
+  }
 
   onPress = (item) => {
     const { navigate } = this.props.navigation
@@ -32,7 +77,7 @@ export default class ProjectList extends Component {
   render() {
     return (
       <FlatList 
-        data={projects} 
+        data={this.state.projects} 
         keyExtractor={(item) => item.name} 
         renderItem={this.renderItem} />
     )
