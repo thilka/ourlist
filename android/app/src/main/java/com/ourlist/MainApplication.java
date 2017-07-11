@@ -11,6 +11,10 @@ import com.facebook.soloader.SoLoader;
 import java.util.Arrays;
 import java.util.List;
 
+import io.invertase.firebase.RNFirebasePackage;
+import io.invertase.firebase.auth.RNFirebaseAuthPackage;
+import io.invertase.firebase.database.RNFirebaseDatabasePackage;
+
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
@@ -22,7 +26,18 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
-          new MainReactPackage()
+          new MainReactPackage(),
+          new RNFirebasePackage(),  // <-- Add this line
+          // Add these packages as appropriate
+          // new RNFirebaseAdMobPackage(),
+          // new RNFirebaseAnalyticsPackage(),
+          new RNFirebaseAuthPackage(),
+          // new RNFirebaseRemoteConfigPackage(),
+          // new RNFirebaseCrashPackage(),
+          new RNFirebaseDatabasePackage()
+          // new RNFirebaseMessagingPackage(),
+          // new RNFirebasePerformancePackage(),
+          // new RNFirebaseStoragePackage()
       );
     }
   };

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "746287078281",
+    "firebase_url": "https://ourlist-dev.firebaseio.com",
+    "project_id": "ourlist-dev",
+    "storage_bucket": "ourlist-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:746287078281:android:d407cfe4ed5f247b",
+        "android_client_info": {
+          "package_name": "de.hilka.ourlist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "746287078281-fatu9ai37efmc11uagdtjj7fvhm5i46g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANv-r10YOxZn6k9ewlLMB6qD62Hlzcu5g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
