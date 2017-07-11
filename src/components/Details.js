@@ -11,6 +11,7 @@ import {
 
 import { CheckBox } from 'react-native-elements'
 
+import AddButton from './AddButton'
 
 const items = [
   {name: 'Item 1'},
@@ -21,7 +22,8 @@ export default class Details extends Component {
 
   static navigationOptions = ({navigation}) => ({
     headerTitle: navigation.state.params.item.name,
-    headerAlignment: 'center'
+    headerAlignment: 'center',
+    headerRight: <AddButton/>
   })
 
   onPress = () => {}

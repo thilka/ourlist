@@ -148,7 +148,6 @@ dependencies {
 
     // If you are receiving Google Play API availability issues, add the following dependency
     compile "com.google.android.gms:play-services-base:11.0.0"
-    // commented out for testing issues with play services on emulator
 
     // RNFirebase optional dependencies
 //    compile "com.google.firebase:firebase-ads:11.0.0"
