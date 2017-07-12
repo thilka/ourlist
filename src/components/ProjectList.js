@@ -5,14 +5,17 @@ import {
   StyleSheet,
   TouchableHighlight,
   Text,
-  Alert
+  Alert,
+  View
 } from 'react-native';
 
 import firebase from '../firebase/FirebaseConfig'
 
+import AddButton from './AddButton'
+
 const initialProjects = [
-  {name: 'Project 1'},
-  {name: 'Project 2'},
+  {id: 1, name: 'Project 1'},
+  {id: 2, name: 'Project 2'},
 ];
 
 export default class ProjectList extends Component {
@@ -43,7 +46,7 @@ export default class ProjectList extends Component {
 
         for (project in remoteProjects) {
           const name = remoteProjects[project].name
-          updatedProjects.push({name: name })
+          updatedProjects.push({id: project, name: name })
         }
         this.setState({projects: updatedProjects})
       });
@@ -61,6 +64,13 @@ export default class ProjectList extends Component {
     console.log('Post Content', snapshot.val());
   }
 
+  onAddProject() {
+    name = this.state.projects.length + 1; 
+    firebase.database().ref('projects').push({
+        name: name
+    });
+  }
+
   onPress = (item) => {
     const { navigate } = this.props.navigation
     navigate("Details", {item: item})
@@ -76,10 +86,13 @@ export default class ProjectList extends Component {
 
   render() {
     return (
-      <FlatList 
-        data={this.state.projects} 
-        keyExtractor={(item) => item.name} 
-        renderItem={this.renderItem} />
+      <View style={{flex:1}}>
+        <AddButton onPress={() => this.onAddProject()}/>
+        <FlatList 
+          data={this.state.projects} 
+          keyExtractor={(item) => item.id} 
+          renderItem={this.renderItem} />
+        </View>
     )
   }
 }
