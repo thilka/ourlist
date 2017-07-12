@@ -25,7 +25,8 @@ export default class AddProject extends Component {
     headerAlignment: 'center',
     headerRight:(
       <View style={{padding: 5}}>
-        <Button title='Done' onPress={() => navigation.state.params.handleSave()}/>
+        <Button title='Done' onPress={() => navigation.state.params.handleSave()} 
+          disabled={navigation.state.params.saveDisabled}/>
       </View>)
 
   })
@@ -35,20 +36,26 @@ export default class AddProject extends Component {
     this.state = { text: '' };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     saveCallback = () => this.onSave()
-    this.props.navigation.setParams({ handleSave: saveCallback});
+    this.props.navigation.setParams({ handleSave: saveCallback, saveDisabled: true});
   }
 
   onSave() {
     this.props.navigation.state.params.saveProjectDetailsCallback(this.state.text)
   }
 
+  onChangeText = (text) => {    
+    textIsEmpty = text.length <= 0
+    this.props.navigation.setParams({saveDisabled: textIsEmpty});
+    this.setState({text})
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <TextInput style={styles.input} placeholder='Name' editable={true} autoFocus={true}
-          onChangeText={(text) => this.setState({text})}
+          onChangeText={this.onChangeText}
           value={this.state.text}
         />
       </View>
@@ -66,6 +73,5 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingTop: 10,
-    
   },
 });
