@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 
 import firebase from '../firebase/FirebaseConfig'
+import Swipeout from 'react-native-swipeout'
 
 import AddButton from '../components/AddButton'
 
@@ -24,7 +25,8 @@ export default class ProjectList extends Component {
     super();
     this.ref = null;
     this.state = {
-      projects: initialProjects
+      projects: initialProjects,
+      selectedProject: null
     }
   }
 
@@ -81,11 +83,53 @@ export default class ProjectList extends Component {
     navigate("Details", {item: item})
   }
 
+  buttons = [
+    {
+      text: 'Delete',
+      onPress: (item) => this.onDelete(item),
+      type: 'delete'
+    }
+  ]
+
+  onDelete = (item) => {
+    console.log("Deleting item {this.state.selectedProject}")
+    console.log(item)
+    console.log(this.state.selectedProject)
+    firebase.database().ref('projects/' + this.state.selectedProject).remove()
+    
+  }
+
+  itemSelected = (sid, rid, item, str) => {
+    console.log(sid)
+    console.log(rid)
+    console.log(item)
+    console.log(str)
+    this.setState({selectedProject: rid})
+  }    
+
+
   renderItem = ({item, index}) => {
+    buttons = [
+      {
+        text: 'Delete',
+        onPress: (item) => this.onDelete(item),
+        type: 'delete'
+      }
+    ]
+
+
     return (
-      <TouchableHighlight underlayColor='lightgrey' style={[ styles.item, { borderTopWidth: index === 0 ? 1 : null} ]} onPress={() => this.onPress(item)}>
-        <Text style={styles.text}>{item.name}</Text>
-      </TouchableHighlight>
+      <Swipeout rowID={item.id} onOpen={(sid, rid, index, str) => this.itemSelected(sid, rid, index, str)} right={buttons} backgroundcolor='white' style={styles.swipes}>
+        <TouchableHighlight underlayColor='lightgrey' style={styles.item} onPress={() => this.onPress(item)}>
+          <Text style={styles.text}>{item.name}</Text>
+        </TouchableHighlight>
+      </Swipeout>
+    )
+  }
+
+  renderSeparator = () => {
+    return (
+      <View style={styles.separator} />
     )
   }
 
@@ -96,8 +140,11 @@ export default class ProjectList extends Component {
         <FlatList 
           data={this.state.projects} 
           keyExtractor={(item) => item.id} 
-          renderItem={this.renderItem} />
-        </View>
+          renderItem={this.renderItem} 
+          
+          ItemSeparatorComponent={this.renderSeparator}
+        />
+      </View>
     )
   }
 }
@@ -107,11 +154,19 @@ const styles = StyleSheet.create({
     flex:1,
     padding: 20,
     justifyContent: 'center',
-    borderColor: 'black',
-    borderBottomWidth: 1
+    //borderColor: 'black',
+    //borderBottomWidth: 1
   },
   text: {
     fontSize: 18,
     alignSelf: 'center'
+  },
+  swipes: {
+    backgroundColor: 'transparent'
+  },
+  separator: {
+    height: 1,
+    backgroundColor: "#CED0CE",
   }
+
 });
