@@ -11,7 +11,7 @@ import {
 
 import firebase from '../firebase/FirebaseConfig'
 
-import AddButton from './AddButton'
+import AddButton from '../components/AddButton'
 
 const initialProjects = [
   {id: 1, name: 'Project 1'},
@@ -65,7 +65,7 @@ export default class ProjectList extends Component {
   }
 
   onAddProject() {
-    name = this.state.projects.length + 1; 
+    name = "Project " + (this.state.projects.length + 1); 
     firebase.database().ref('projects').push({
         name: name
     });

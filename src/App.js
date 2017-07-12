@@ -8,8 +8,8 @@ import {
 
 import {StackNavigator} from 'react-navigation'
 
-import ProjectList from './components/ProjectList';
-import Details from './components/Details';
+import ProjectList from './screens/ProjectList';
+import Details from './screens/Details';
 
 export default class App extends Component {
 

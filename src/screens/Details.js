@@ -11,8 +11,6 @@ import {
 
 import { CheckBox } from 'react-native-elements'
 
-import AddButton from './AddButton'
-
 const items = [
   {name: 'Item 1'},
   {name: 'Item 2'},
