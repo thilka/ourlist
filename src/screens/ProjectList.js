@@ -65,10 +65,15 @@ export default class ProjectList extends Component {
   }
 
   onAddProject() {
-    name = "Project " + (this.state.projects.length + 1); 
+    const { navigate } = this.props.navigation
+    navigate("AddProject", {saveProjectDetailsCallback: this.saveProjectDetailsCallback})
+  }
+
+  saveProjectDetailsCallback = (projectName) => {
     firebase.database().ref('projects').push({
-        name: name
+        name: projectName
     });
+    this.props.navigation.goBack(null)
   }
 
   onPress = (item) => {

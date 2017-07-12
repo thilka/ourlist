@@ -10,6 +10,7 @@ import {StackNavigator} from 'react-navigation'
 
 import ProjectList from './screens/ProjectList';
 import Details from './screens/Details';
+import AddProject from './screens/AddProject'
 
 export default class App extends Component {
 
@@ -48,6 +49,7 @@ const styles = StyleSheet.create({
 const Navigation = StackNavigator({
   Home: { screen: App, },
   Details: { screen: Details, },
+  AddProject: { screen: AddProject, },
 })
 
 AppRegistry.registerComponent('ourlist', () => Navigation);
