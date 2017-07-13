@@ -20,16 +20,21 @@ const items = [
 
 export default class AddProject extends Component {
 
-  static navigationOptions = ({navigation}) => ({
-    headerTitle: 'Create',
-    headerAlignment: 'center',
-    headerRight:(
-      <View style={{padding: 5}}>
-        <Button title='Done' onPress={() => navigation.state.params.handleSave()} 
-          disabled={navigation.state.params.saveDisabled}/>
-      </View>)
+  static navigationOptions = ({navigation}) => {
+    // make sure the disabled property of the done button is handled without race condition
+    // if we refer to a property from the class, the button is initially enabled for a short time
+    currentText = navigation.state.params.text ? navigation.state.params.text : ''
 
-  })
+    return ({
+      headerTitle: 'Create',
+      headerAlignment: 'center',
+      headerRight:(
+        <View style={{padding: 5}}>
+          <Button title='Done' onPress={() => navigation.state.params.handleSave()} 
+            disabled={currentText <= 0}/>
+        </View>)
+    })
+}
 
   constructor(props) {
     super(props);
@@ -38,7 +43,7 @@ export default class AddProject extends Component {
 
   componentWillMount() {
     saveCallback = () => this.onSave()
-    this.props.navigation.setParams({ handleSave: saveCallback, saveDisabled: true});
+    this.props.navigation.setParams({ handleSave: saveCallback, text:''});
   }
 
   onSave() {
@@ -46,8 +51,7 @@ export default class AddProject extends Component {
   }
 
   onChangeText = (text) => {    
-    textIsEmpty = text.length <= 0
-    this.props.navigation.setParams({saveDisabled: textIsEmpty});
+    this.props.navigation.setParams({text:text});
     this.setState({text})
   }
 
@@ -56,8 +60,7 @@ export default class AddProject extends Component {
       <View style={styles.container}>
         <TextInput style={styles.input} placeholder='Name' editable={true} autoFocus={true}
           onChangeText={this.onChangeText}
-          value={this.state.text}
-        />
+          value={this.state.text}/>
       </View>
     )
   }

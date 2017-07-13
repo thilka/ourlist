@@ -92,18 +92,10 @@ export default class ProjectList extends Component {
   ]
 
   onDelete = (item) => {
-    console.log("Deleting item {this.state.selectedProject}")
-    console.log(item)
-    console.log(this.state.selectedProject)
     firebase.database().ref('projects/' + this.state.selectedProject).remove()
-    
   }
 
-  itemSelected = (sid, rid, item, str) => {
-    console.log(sid)
-    console.log(rid)
-    console.log(item)
-    console.log(str)
+  itemSelected = (sid, rid, direction) => {
     this.setState({selectedProject: rid})
   }    
 
@@ -117,9 +109,9 @@ export default class ProjectList extends Component {
       }
     ]
 
-
     return (
-      <Swipeout rowID={item.id} onOpen={(sid, rid, index, str) => this.itemSelected(sid, rid, index, str)} right={buttons} backgroundcolor='white' style={styles.swipes}>
+      <Swipeout rowID={item.id} onOpen={(sid, rid, direction) => this.itemSelected(sid, rid, direction)} 
+          right={buttons} backgroundcolor='white' style={styles.swipes}>
         <TouchableHighlight underlayColor='lightgrey' style={styles.item} onPress={() => this.onPress(item)}>
           <Text style={styles.text}>{item.name}</Text>
         </TouchableHighlight>
@@ -154,8 +146,6 @@ const styles = StyleSheet.create({
     flex:1,
     padding: 20,
     justifyContent: 'center',
-    //borderColor: 'black',
-    //borderBottomWidth: 1
   },
   text: {
     fontSize: 18,
