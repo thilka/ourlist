@@ -3,14 +3,10 @@ import {
   AppRegistry,
   FlatList,
   StyleSheet,
-  TouchableHighlight,
-  Text,
-  Alert,
   View
 } from 'react-native';
 
 import firebase from '../firebase/FirebaseConfig'
-import Swipeout from 'react-native-swipeout'
 
 import AddButton from '../components/AddButton'
 import ProjectItem from '../components/ProjectItem'
@@ -89,21 +85,21 @@ export default class ProjectList extends Component {
     this.setState({selectedProject: rid})
   }    
 
+  buttons = [
+    {
+      text: 'Delete',
+      onPress: (item) => this.onDelete(item),
+      type: 'delete'
+    }
+  ]
 
   renderItem = ({item, index}) => {
-    buttons = [
-      {
-        text: 'Delete',
-        onPress: (item) => this.onDelete(item),
-        type: 'delete'
-      }
-    ]
-
     return (
-      <Swipeout rowID={item.id} onOpen={(sid, rid, direction) => this.itemSelected(sid, rid, direction)} 
-          right={buttons} backgroundcolor='white' style={styles.swipes}>
-        <ProjectItem onPress={() => this.onPress(item)} item={item}/>
-      </Swipeout>
+      <ProjectItem 
+        onPress={() => this.onPress(item)} 
+        item={item}
+        itemSelected={(sid, rid, direction) => this.itemSelected(sid, rid, direction)}
+        buttons={this.buttons}/>
     )
   }
 
@@ -121,7 +117,6 @@ export default class ProjectList extends Component {
           data={this.state.projects} 
           keyExtractor={(item) => item.id} 
           renderItem={this.renderItem} 
-          
           ItemSeparatorComponent={this.renderSeparator}
         />
       </View>
@@ -130,10 +125,6 @@ export default class ProjectList extends Component {
 }
 
 const styles = StyleSheet.create({
-
-  swipes: {
-    backgroundColor: 'transparent'
-  },
   separator: {
     height: 1,
     backgroundColor: "#CED0CE",

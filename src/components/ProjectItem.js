@@ -5,14 +5,26 @@ import {
   Text
 } from 'react-native';
 
+import Swipeout from 'react-native-swipeout'
+
 export default class ProjectItem extends Component {
 
   render() {
-    const {onPress, item} = this.props
+    const {onPress, item, itemSelected, buttons} = this.props
     return (
-      <TouchableHighlight underlayColor='lightgrey' style={styles.item} onPress={() => onPress(item)}>
-        <Text style={styles.text}>{item.name}</Text>
-      </TouchableHighlight>
+      <Swipeout 
+          rowID={item.id} 
+          onOpen={(sid, rid, direction) => itemSelected(sid, rid, direction)} 
+          right={buttons} 
+          backgroundcolor='white' 
+          style={styles.swipes}>
+        <TouchableHighlight 
+            underlayColor='lightgrey' 
+            style={styles.item} 
+            onPress={() => onPress(item)}>
+          <Text style={styles.text}>{item.name}</Text>
+        </TouchableHighlight>
+      </Swipeout>
     )
   }
 }
@@ -27,5 +39,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     alignSelf: 'center'
   },
-
+  swipes: {
+    backgroundColor: 'transparent'
+  },
 });
