@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 
 import {StackNavigator} from 'react-navigation'
+import firebase from './firebase/FirebaseConfig'
 
 import ProjectList from './screens/ProjectList';
 import Details from './screens/Details';
@@ -17,6 +18,16 @@ export default class App extends Component {
   static navigationOptions = {
     headerTitle: "OurList",
     headerAlignment: 'center'
+  }
+
+  componentDidMount() {
+    firebase.auth().signInAnonymously()
+      .then((user) => {
+       console.log('Anonymous user logged in'); 
+      })
+      .catch((err) => {
+        console.error('Anonymous user signin error', err);
+      });
   }
 
   render() {

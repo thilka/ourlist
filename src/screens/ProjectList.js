@@ -32,38 +32,27 @@ export default class ProjectList extends Component {
 
   // On mount, subscribe to ref updates
   componentDidMount() {
-    firebase.auth().signInAnonymously()
-      .then((user) => {
-       console.log('Anonymous user logged in'); 
-      })
-      .catch((err) => {
-        console.error('Anonymous user signin error', err);
-      });
-
-
       this.ref = firebase.database().ref('projects');
-      this.ref.on('value', (snapshot) => {
-        const updatedProjects = []
-        const remoteProjects = snapshot.val();
-
-        for (project in remoteProjects) {
-          const name = remoteProjects[project].name
-          updatedProjects.push({id: project, name: name })
-        }
-        this.setState({projects: updatedProjects})
-      });
+      this.ref.on('value', this.handleUpdates)
   }
 
   // On unmount, ensure we no longer listen for updates
   componentWillUnmount() {
     if (this.ref) {
-      this.ref.off('value', this.handlePostUpdate);
+      this.ref.off('value', this.handleUpdates);
     }
   }
 
   // Bind the method only once to keep the same reference
-  handlePostUpdate = (snapshot) => {
-    console.log('Post Content', snapshot.val());
+  handleUpdates = (snapshot) => {
+    const updatedProjects = []
+    const remoteProjects = snapshot.val();
+
+    for (project in remoteProjects) {
+      const name = remoteProjects[project].name
+      updatedProjects.push({id: project, name: name })
+    }
+    this.setState({projects: updatedProjects})
   }
 
   onAddProject() {
@@ -72,7 +61,7 @@ export default class ProjectList extends Component {
   }
 
   saveProjectDetailsCallback = (projectName) => {
-    firebase.database().ref('projects').push({
+    this.ref.push({
         name: projectName
     });
     this.props.navigation.goBack(null)
