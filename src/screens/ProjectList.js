@@ -13,6 +13,7 @@ import firebase from '../firebase/FirebaseConfig'
 import Swipeout from 'react-native-swipeout'
 
 import AddButton from '../components/AddButton'
+import ProjectItem from '../components/ProjectItem'
 
 const initialProjects = [
   {id: 1, name: 'Project 1'},
@@ -101,9 +102,7 @@ export default class ProjectList extends Component {
     return (
       <Swipeout rowID={item.id} onOpen={(sid, rid, direction) => this.itemSelected(sid, rid, direction)} 
           right={buttons} backgroundcolor='white' style={styles.swipes}>
-        <TouchableHighlight underlayColor='lightgrey' style={styles.item} onPress={() => this.onPress(item)}>
-          <Text style={styles.text}>{item.name}</Text>
-        </TouchableHighlight>
+        <ProjectItem onPress={() => this.onPress(item)} item={item}/>
       </Swipeout>
     )
   }
@@ -131,15 +130,7 @@ export default class ProjectList extends Component {
 }
 
 const styles = StyleSheet.create({
-  item: {
-    flex:1,
-    padding: 20,
-    justifyContent: 'center',
-  },
-  text: {
-    fontSize: 18,
-    alignSelf: 'center'
-  },
+
   swipes: {
     backgroundColor: 'transparent'
   },
