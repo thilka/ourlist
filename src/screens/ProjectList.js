@@ -3,7 +3,8 @@ import {
   AppRegistry,
   FlatList,
   StyleSheet,
-  View
+  View, 
+  ActivityIndicator
 } from 'react-native';
 
 import firebase from '../firebase/FirebaseConfig'
@@ -11,19 +12,15 @@ import firebase from '../firebase/FirebaseConfig'
 import AddButton from '../components/AddButton'
 import ProjectItem from '../components/ProjectItem'
 
-const initialProjects = [
-  {id: 1, name: 'Project 1'},
-  {id: 2, name: 'Project 2'},
-];
-
 export default class ProjectList extends Component {
 
   constructor() {
     super();
     this.ref = null;
     this.state = {
-      projects: initialProjects,
-      selectedProject: null
+      projects: [],
+      selectedProject: null,
+      loading: true
     }
   }
 
@@ -49,7 +46,7 @@ export default class ProjectList extends Component {
       const name = remoteProjects[project].name
       updatedProjects.push({id: project, name: name })
     }
-    this.setState({projects: updatedProjects})
+    this.setState({projects: updatedProjects, loading: false})
   }
 
   onAddProject() {
@@ -94,16 +91,21 @@ export default class ProjectList extends Component {
   }
 
   render() {
+
     return (
-      <View style={{flex:1}}>
-        <AddButton onPress={() => this.onAddProject()}/>
-        <FlatList 
-          data={this.state.projects} 
-          keyExtractor={(item) => item.id} 
-          renderItem={this.renderItem} 
-          ItemSeparatorComponent={this.renderSeparator}
-        />
-      </View>
+      this.state.loading ? 
+          <ActivityIndicator color='#000000' size='large' /> : 
+          (
+            <View style={{flex:1}}>
+              <AddButton onPress={() => this.onAddProject()}/>
+              <FlatList 
+                data={this.state.projects} 
+                keyExtractor={(item) => item.id} 
+                renderItem={this.renderItem} 
+                ItemSeparatorComponent={this.renderSeparator}
+              />
+            </View>
+        )
     )
   }
 }
