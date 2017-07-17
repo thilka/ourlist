@@ -69,14 +69,6 @@ export default class ProjectList extends Component {
     navigate("Details", {item: item})
   }
 
-  buttons = [
-    {
-      text: 'Delete',
-      onPress: (item) => this.onDelete(item),
-      type: 'delete'
-    }
-  ]
-
   onDelete = (item) => {
     firebase.database().ref('projects/' + this.state.selectedProject).remove()
   }
@@ -85,21 +77,13 @@ export default class ProjectList extends Component {
     this.setState({selectedProject: rid})
   }    
 
-  buttons = [
-    {
-      text: 'Delete',
-      onPress: (item) => this.onDelete(item),
-      type: 'delete'
-    }
-  ]
-
   renderItem = ({item, index}) => {
     return (
       <ProjectItem 
         onPress={() => this.onPress(item)} 
         item={item}
         itemSelected={(sid, rid, direction) => this.itemSelected(sid, rid, direction)}
-        buttons={this.buttons}/>
+        onDelete={(item) => this.onDelete(item)}/>
     )
   }
 

@@ -10,7 +10,16 @@ import Swipeout from 'react-native-swipeout'
 export default class ProjectItem extends Component {
 
   render() {
-    const {onPress, item, itemSelected, buttons} = this.props
+    const {onPress, item, itemSelected, onDelete} = this.props
+
+    buttons = [
+      {
+        text: 'Delete',
+        onPress: (item) => onDelete(item),
+        type: 'delete'
+      }
+    ]
+
     return (
       <Swipeout 
           rowID={item.id} 
