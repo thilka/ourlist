@@ -27,7 +27,7 @@ export default class ProjectList extends Component {
   // On mount, subscribe to ref updates
   componentDidMount() {
       this.ref = firebase.database().ref('projects');
-      this.ref.on('value', this.handleUpdates)
+      this.ref.orderByChild('created').on('value', this.handleUpdates)
   }
 
   // On unmount, ensure we no longer listen for updates
@@ -40,12 +40,10 @@ export default class ProjectList extends Component {
   // Bind the method only once to keep the same reference
   handleUpdates = (snapshot) => {
     const updatedProjects = []
-    const remoteProjects = snapshot.val();
 
-    for (project in remoteProjects) {
-      const name = remoteProjects[project].name
-      updatedProjects.push({id: project, name: name })
-    }
+    snapshot.forEach((project) => {
+      updatedProjects.push({id: project.key, name: project.val().name })
+    });
     this.setState({projects: updatedProjects, loading: false})
   }
 
@@ -56,7 +54,8 @@ export default class ProjectList extends Component {
 
   saveProjectDetailsCallback = (projectName) => {
     this.ref.push({
-        name: projectName
+        name: projectName,
+        created: new Date().getTime(),
     });
     this.props.navigation.goBack(null)
   }
