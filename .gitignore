@@ -54,3 +54,6 @@ fastlane/screenshots
 
 #Pod
 Pods/
+
+#Android
+android/app/src/main/assets/index.android.bundle
