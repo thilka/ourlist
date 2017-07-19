@@ -10,7 +10,7 @@ import Swipeout from 'react-native-swipeout'
 export default class ProjectItem extends Component {
 
   render() {
-    const {onPress, item, itemSelected, onDelete} = this.props
+    const {onPress, item, itemSelected, onDelete, wasLastSelected} = this.props
 
     buttons = [
       {
@@ -23,6 +23,8 @@ export default class ProjectItem extends Component {
     return (
       <Swipeout 
           rowID={item.id} 
+          close={!wasLastSelected}
+          autoClose={true}
           onOpen={(sid, rid, direction) => itemSelected(sid, rid, direction)} 
           right={buttons} 
           backgroundcolor='white' 

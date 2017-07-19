@@ -78,6 +78,7 @@ export default class ProjectList extends Component {
       <ProjectItem 
         onPress={() => this.onPress(item)} 
         item={item}
+        wasLastSelected={this.state.selectedProject === item.id}
         itemSelected={(sid, rid, direction) => this.itemSelected(sid, rid, direction)}
         onDelete={(item) => this.onDelete(item)}/>
     )
@@ -99,6 +100,7 @@ export default class ProjectList extends Component {
               <AddButton onPress={() => this.onAddProject()}/>
               <FlatList 
                 data={this.state.projects} 
+                extraDate={this.state}
                 keyExtractor={(item) => item.id} 
                 renderItem={this.renderItem} 
                 ItemSeparatorComponent={this.renderSeparator}
