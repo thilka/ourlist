@@ -20,7 +20,8 @@ export default class Details extends Component {
 
   static navigationOptions = ({navigation}) => ({
     headerTitle: navigation.state.params.item.name,
-    headerAlignment: 'center',
+    headerStyle: { backgroundColor: '#58a2fb'},
+    headerTintColor: 'black',
   })
 
   renderItem = ({item, index}) => {
@@ -33,10 +34,12 @@ export default class Details extends Component {
 
   render() {
     return (
-      <FlatList 
-        data={items} 
-        keyExtractor={(item) => item.name} 
-        renderItem={this.renderItem} />
+      <View style={styles.detailsPane}>
+        <FlatList 
+          data={items} 
+          keyExtractor={(item) => item.name} 
+          renderItem={this.renderItem} />
+      </View>
     )
   }
 }
@@ -59,6 +62,11 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     padding: 5
+  },
+  detailsPane: {
+    backgroundColor: 'white',
+    flex:1
   }
+  
 
 });
