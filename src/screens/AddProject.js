@@ -28,13 +28,15 @@ export default class AddProject extends Component {
     return ({
       headerTitle: 'Create',
       headerAlignment: 'center',
+      headerStyle: { backgroundColor: '#58a2fb'},
+      headerTintColor: 'black',
       headerRight:(
         <View style={{padding: 5}}>
           <Button title='Done' onPress={() => navigation.state.params.handleSave()} 
             disabled={currentText <= 0}/>
         </View>)
     })
-}
+  }
 
   constructor(props) {
     super(props);
