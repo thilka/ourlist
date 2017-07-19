@@ -4,7 +4,8 @@ import {
   FlatList,
   StyleSheet,
   View, 
-  ActivityIndicator
+  ActivityIndicator,
+  Text
 } from 'react-native';
 
 import firebase from '../firebase/FirebaseConfig'
@@ -98,6 +99,7 @@ export default class ProjectList extends Component {
           (
             <View style={{flex:1}}>
               <AddButton onPress={() => this.onAddProject()}/>
+              <View style={styles.headerFooter} />
               <FlatList 
                 data={this.state.projects} 
                 extraDate={this.state}
@@ -105,6 +107,10 @@ export default class ProjectList extends Component {
                 renderItem={this.renderItem} 
                 ItemSeparatorComponent={this.renderSeparator}
               />
+              <View style={styles.headerFooter} />
+              <View style={{alignItems:'flex-end', padding: 7}}>
+                <Text>{this.state.projects.length} Items</Text>
+              </View>
             </View>
         )
     )
@@ -114,7 +120,11 @@ export default class ProjectList extends Component {
 const styles = StyleSheet.create({
   separator: {
     height: 1,
-    backgroundColor: "#CED0CE",
+    backgroundColor: "lightgrey",
+  },
+  headerFooter: {
+    height: 3,
+    backgroundColor: "grey"
   }
 
 });
