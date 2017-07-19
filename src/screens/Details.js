@@ -7,10 +7,11 @@ import {
   Text,
   Alert, 
   View,
-  ActivityIndicator
+  ActivityIndicator,
+  TextInput
 } from 'react-native';
 
-import { CheckBox } from 'react-native-elements'
+import { CheckBox, Button } from 'react-native-elements'
 import firebase from '../firebase/FirebaseConfig'
 
 export default class Details extends Component {
@@ -50,15 +51,26 @@ export default class Details extends Component {
     updatedItems = []
 
     snapshot.forEach((item) => {
-      updatedItems.push({id: item.key, name: item.val().name })
+      updatedItems.push({id: item.key, name: item.val().name, done: item.val().done })
     });
     this.setState({items: updatedItems, loading: false})
   }
 
   renderItem = ({item, index}) => {
+    doneIconColor = item.done ? 'green' : 'grey'
+    backgroundColor = item.done ? 'lightgreen' : 'white'
+
     return (
-      <View style={styles.row}>
-        <CheckBox style={styles.checkbox} textStyle={styles.text} title={item.name}/>
+      <View >
+        {/*<CheckBox style={styles.checkbox} textStyle={styles.text} title={item.name}/>*/}
+        <View style={styles.row}>
+          <Button icon={{name:'check-circle', color:doneIconColor, size:20}}
+            title={item.name} backgroundColor={backgroundColor} color='black' underlayColor='lightgrey'
+            buttonStyle={{flexDirection: 'row'}} />
+          {/*<TextInput style={styles.input} placeholder='Name' editable={false} autoFocus={true}
+          onChangeText={this.onChangeText}
+          value={item.name}/>*/}
+        </View>
       </View>
     )
   }
@@ -81,26 +93,36 @@ export default class Details extends Component {
 }
 
 const styles = StyleSheet.create({
-  item: {
-    flex:1,
-    padding: 20,
-    justifyContent: 'center',
-    borderColor: 'black',
-    borderBottomWidth: 1
-  },
-  text: {
-    alignSelf: 'center',
-    fontSize:15
-  },
-  checkbox: {
-    // to override default style
-  },
+  // item: {
+  //   flex:1,
+  //   padding: 20,
+  //   justifyContent: 'center',
+  //   borderColor: 'black',
+  //   borderBottomWidth: 1
+  // },
+  // text: {
+  //   alignSelf: 'center',
+  //   fontSize:15
+  // },
+  // checkbox: {
+  //   // to override default style
+  // },
   row: {
-    flexDirection: 'row',
-    padding: 5
+    // flexDirection: 'row',
+    flex: 1,
+    padding: 5,
+    // alignContent: 'flex-start',
+    // alignSelf: 'center'
   },
   detailsPane: {
     backgroundColor: 'white',
     flex:1
-  }
+  },
+  // input: {
+  //   padding: 10,
+  //   fontSize: 16,
+  //   justifyContent: 'center',
+  //   margin:2,
+  //   backgroundColor: 'white'
+  // },
 });
