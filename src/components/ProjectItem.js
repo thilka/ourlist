@@ -48,7 +48,8 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 18,
-    alignSelf: 'flex-start'
+    alignSelf: 'flex-start',
+    color: 'black'
   },
   swipes: {
     backgroundColor: 'transparent'

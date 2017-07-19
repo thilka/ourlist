@@ -17,6 +17,7 @@ export default class App extends Component {
 
   static navigationOptions = {
     headerTitle: "OurList",
+    headerStyle: { backgroundColor: '#58a2fb'},
     headerAlignment: 'center'
   }
 
@@ -45,6 +46,7 @@ const styles = StyleSheet.create({
     padding: 10,
     justifyContent: 'center',
     alignItems: 'stretch',
+    backgroundColor: 'white'
   },
   welcome: {
     fontSize: 20,

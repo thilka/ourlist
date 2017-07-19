@@ -120,11 +120,11 @@ export default class ProjectList extends Component {
 const styles = StyleSheet.create({
   separator: {
     height: 1,
-    backgroundColor: "lightgrey",
+    backgroundColor: "#58a2fb",
   },
   headerFooter: {
     height: 3,
-    backgroundColor: "grey"
+    backgroundColor: "#58a2fb"
   }
 
 });
