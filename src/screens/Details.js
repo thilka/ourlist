@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   row: {
     // flexDirection: 'row',
     flex: 1,
-    padding: 5,
+    padding: 1,
     // alignContent: 'flex-start',
     // alignSelf: 'center'
   },
