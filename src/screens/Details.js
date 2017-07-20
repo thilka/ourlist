@@ -36,7 +36,7 @@ export default class Details extends Component {
     const {item} = this.props.navigation.state.params
 
     this.ref = firebase.database().ref('items');
-    this.ref.equalTo(item.id).orderByChild('project').on('value', this.handleUpdates)
+    this.ref.equalTo(item.id).orderByChild('project').on('value', this.handleUpdates)  
   }
 
   // On unmount, ensure we no longer listen for updates
@@ -56,6 +56,15 @@ export default class Details extends Component {
     this.setState({items: updatedItems, loading: false})
   }
 
+  itemPressed = (item) => {
+    item.done = !item.done
+
+    var updates = {
+      done: item.done
+    }
+    this.ref.child(item.id).update(updates)
+  }
+
   renderItem = ({item, index}) => {
     doneIconColor = item.done ? 'green' : 'grey'
     backgroundColor = item.done ? 'lightgreen' : 'white'
@@ -66,7 +75,8 @@ export default class Details extends Component {
         <View style={styles.row}>
           <Button icon={{name:'check-circle', color:doneIconColor, size:20}}
             title={item.name} backgroundColor={backgroundColor} color='black' underlayColor='lightgrey'
-            buttonStyle={{flexDirection: 'row'}} />
+            buttonStyle={{flexDirection: 'row'}} 
+            onPress={() => this.itemPressed(item)}/>
           {/*<TextInput style={styles.input} placeholder='Name' editable={false} autoFocus={true}
           onChangeText={this.onChangeText}
           value={item.name}/>*/}
