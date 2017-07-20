@@ -63,7 +63,7 @@ export default class ProjectList extends Component {
 
   onPress = (item) => {
     const { navigate } = this.props.navigation
-    navigate("Details", {item: item})
+    navigate("Details", {project: item})
   }
 
   onDelete = (item) => {
