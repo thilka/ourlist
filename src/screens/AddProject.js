@@ -60,7 +60,9 @@ export default class AddProject extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TextInput style={styles.input} placeholder='Name' editable={true} autoFocus={true}
+        <TextInput style={styles.input} 
+          placeholder='Name' placeholderTextColor='black'
+          editable={true} autoFocus={true}
           onChangeText={this.onChangeText}
           value={this.state.text}/>
       </View>
@@ -74,9 +76,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     justifyContent: 'center',
     margin:2,
-    backgroundColor: 'white'
+    backgroundColor: '#58a2fb40',
+    
   },
   container: {
     paddingTop: 10,
+    backgroundColor: 'white',
+    flex:1
+
   },
 });
