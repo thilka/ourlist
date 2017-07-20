@@ -35,8 +35,8 @@ export default class Details extends Component {
   componentDidMount() {
     const {item} = this.props.navigation.state.params
 
-    this.ref = firebase.database().ref('items');
-    this.ref.equalTo(item.id).orderByChild('project').on('value', this.handleUpdates)  
+    this.ref = firebase.database().ref('items').equalTo(item.id).orderByChild('project');
+    this.ref.on('value', this.handleUpdates)  
   }
 
   // On unmount, ensure we no longer listen for updates
