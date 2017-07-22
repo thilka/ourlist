@@ -68,6 +68,14 @@ export default class ProjectList extends Component {
 
   onDelete = (item) => {
     firebase.database().ref('projects/' + this.state.selectedProject).remove()
+    referencedItems = firebase.database().ref('items')
+      .equalTo(this.state.selectedProject).orderByChild('project').once('value')
+      .then((snapshot) => {
+        snapshot.forEach((item) => {
+          firebase.database().ref('items/'+item.key).remove()
+        })
+        
+      });
   }
 
   itemSelected = (sid, rid, direction) => {
