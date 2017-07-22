@@ -15,6 +15,7 @@ import { CheckBox, Button } from 'react-native-elements'
 import firebase from '../firebase/FirebaseConfig'
 
 import AddButton from '../components/AddButton'
+import DetailItem from '../components/DetailItem'
 
 export default class Details extends Component {
 
@@ -29,7 +30,8 @@ export default class Details extends Component {
     this.ref = null;
     this.state = {
       items: null,
-      loading: true
+      loading: true,
+      swipedItem: null
     }
   }
 
@@ -83,22 +85,23 @@ export default class Details extends Component {
     this.ref.child(item.id).update(updates)
   }
 
+  itemSwiped = (sid, rid, direction) => {
+    this.setState({swipedItem: rid})
+  }   
+
+  onDelete() {
+    this.ref.child(this.state.swipedItem).remove()
+  }
+
   renderItem = ({item, index}) => {
-    doneIconColor = item.done ? 'green' : 'grey'
-    backgroundColor = item.done ? 'lightgreen' : 'white'
 
     return (
-      <View style={{flex:1}}>
-        <View style={styles.row}>
-          <Button icon={{name:'check-circle', color:doneIconColor, size:20}}
-            title={item.name} backgroundColor={backgroundColor} color='black' underlayColor='lightgrey'
-            buttonStyle={{flexDirection: 'row'}} 
-            onPress={() => this.itemPressed(item)}/>
-          {/*<TextInput style={styles.input} placeholder='Name' editable={false} autoFocus={true}
-          onChangeText={this.onChangeText}
-          value={item.name}/>*/}
-        </View>
-      </View>
+      <DetailItem item={item} 
+        wasLastSelected={this.state.swipedItem === item.id}
+        itemSwiped={(sid, rid, direction) => this.itemSwiped(sid, rid, direction)}
+        onPress={() => this.itemPressed(item)}
+        onDelete={() => this.onDelete()}
+        />
     )
   }
 
@@ -123,26 +126,9 @@ export default class Details extends Component {
 }
 
 const styles = StyleSheet.create({
-  // item: {
-  //   flex:1,
-  //   padding: 20,
-  //   justifyContent: 'center',
-  //   borderColor: 'black',
-  //   borderBottomWidth: 1
-  // },
-  // text: {
-  //   alignSelf: 'center',
-  //   fontSize:15
-  // },
-  // checkbox: {
-  //   // to override default style
-  // },
   row: {
-    // flexDirection: 'row',
     flex: 1,
     padding: 2,
-    // alignContent: 'flex-start',
-    // alignSelf: 'center'
   },
   detailsPane: {
     backgroundColor: 'white',
@@ -152,11 +138,4 @@ const styles = StyleSheet.create({
     height: 3,
     backgroundColor: "#58a2fb"
   }
-  // input: {
-  //   padding: 10,
-  //   fontSize: 16,
-  //   justifyContent: 'center',
-  //   margin:2,
-  //   backgroundColor: 'white'
-  // },
 });
