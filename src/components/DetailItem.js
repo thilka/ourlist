@@ -21,7 +21,6 @@ export default class DetailItem extends Component {
         type: 'delete'
       }
     ]
-    // console.log(itemSwipedeitemSwipedeed)
     doneIconColor = item.done ? 'green' : 'grey'
     backgroundColor = item.done ? 'lightgreen' : 'white'
 
@@ -39,9 +38,6 @@ export default class DetailItem extends Component {
               title={item.name} backgroundColor={backgroundColor} color='black' underlayColor='lightgrey'
               buttonStyle={{flexDirection: 'row'}} 
               onPress={() => onPress(item)}/>
-            {/*<TextInput style={styles.input} placeholder='Name' editable={false} autoFocus={true}
-            onChangeText={this.onChangeText}
-            value={item.name}/>*/}
           </View>
        </Swipeout>
     )
@@ -50,11 +46,7 @@ export default class DetailItem extends Component {
 
 const styles = StyleSheet.create({
   row: {
-    // flexDirection: 'row',
     flex: 1,
-    // padding: 2,
-    // alignContent: 'flex-start',
-    // alignSelf: 'center'
   },
   swipes: {
     backgroundColor: 'transparent'
